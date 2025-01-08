@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 15:48:30 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/08 14:33:51 by asaadeh          ###   ########.fr       */
+/*   Created: 2025/01/08 14:01:10 by asaadeh           #+#    #+#             */
+/*   Updated: 2025/01/08 15:21:29 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "so_long.h"
 
-size_t	ft_strlen(const char *str)
+int	is_rectangle(t_game *game)
 {
-	size_t	i;
+	size_t len;
+	int		i;
 
+	len = removeln(game->map->arr[0]);
 	i = 0;
-	while (str[i])
+	while (game->map->arr[i])
+	{
+		if (removeln(game->map->arr[i]) != len)
+		{
+			perror("Error: The map is not rectangle.");
+			return (1);
+		}
 		i++;
-	return (i);
+	}
+        return (0);
 }
-/*int	main(void)
+
+size_t	removeln(char *line)
 {
-	char *str = "ahmad";
-	printf("%ld", ft_strlen(str));
-}*/
+	size_t	len;
+
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		len--;
+	return (len);
+}

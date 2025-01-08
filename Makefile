@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 MFLAGS = -Lminilibx-linux -lmlx -lXext -lX11
 
-SLSRCS =  so_long_dir/main.c so_long_dir/initilize.c so_long_dir/put_image.c so_long_dir/move_player.c
+SLSRCS =  so_long_dir/main.c so_long_dir/initilize.c so_long_dir/put_image.c so_long_dir/move_player.c so_long_dir/error_handling.c so_long_dir/free.c so_long_dir/collectable.c
 
 SLOBJ = $(SLSRCS:.c=.o)
 

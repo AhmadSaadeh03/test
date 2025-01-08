@@ -6,57 +6,65 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 17:44:59 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/06 23:56:26 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/08 15:51:10 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 
-void init_images(t_game *game)
+t_image *init_images(t_game *game)
 {
-    int high = 64;
-    int width = 64;
-    game->image.high_image = high;
-    game->image.width_image = width;
-    game->image.img_player = mlx_xpm_file_to_image(game->mlx, "photos/player.xpm", &game->image.high_image, &game->image.width_image);
-    game->image.img_wall = mlx_xpm_file_to_image(game->mlx, "photos/wall.xpm", &game->image.high_image, &game->image.width_image);
-    game->image.img_floor = mlx_xpm_file_to_image(game->mlx, "photos/floor.xpm", &game->image.high_image, &game->image.width_image);
-    game->image.img_collectable = mlx_xpm_file_to_image(game->mlx, "photos/collectable.xpm", &game->image.high_image, &game->image.width_image);
-    game->image.img_exit = mlx_xpm_file_to_image(game->mlx, "photos/exit.xpm", &game->image.high_image, &game->image.width_image);
+    t_image	*image;
+    image = malloc(sizeof(t_image));
+	if (!image)
+    {
+        image_destroy(game);
+		exit(1);
+    }
+    image->height_image = 64;
+    image->width_image = 64;
+    image->img_floor = mlx_xpm_file_to_image(game->mlx, "photos/floor.xpm",&image->width_image, &image->height_image);
+    image->img_collectable = mlx_xpm_file_to_image(game->mlx, "photos/collectable.xpm",&image->width_image, &image->height_image);
+    image->img_exit = mlx_xpm_file_to_image(game->mlx, "photos/exit.xpm",&image->width_image, &image->height_image);
+    image->img_player = mlx_xpm_file_to_image(game->mlx, "photos/player.xpm",&image->width_image, &image->height_image);
+    image->img_wall = mlx_xpm_file_to_image(game->mlx, "photos/wall.xpm",&image->width_image, &image->height_image);
+    return image;
 }
 
+void place_image_at_position(t_game *game, int x, int y)
+{
+    void *image;
+
+    if (game->map->arr[y][x] == '1')
+        image = game->image->img_wall;
+    else if (game->map->arr[y][x] == '0') 
+        image = game->image->img_floor;
+    else if (game->map->arr[y][x] == 'P')
+    {
+        image = game->image->img_player;
+        game->player->player_x = x;
+        game->player->player_y = y;
+    }
+    else if (game->map->arr[y][x] == 'C') 
+        image = game->image->img_collectable;
+    else if (game->map->arr[y][x] == 'E') 
+        image = game->image->img_exit;
+    else 
+        return;
+    mlx_put_image_to_window(game->mlx, game->window, image, x * 64, y * 64);
+}
 void place_images_on_map(t_game *game)
 {
     int x = 0;
     int y = 0;
-    
+
     while (game->map->arr[y] != NULL)
     {
         x = 0;
-        while (game->map->arr[y][x] != '\0')
+        while (game->map->arr[y][x])
         {
-            if (game->map->arr[y][x] == '1')
-            {
-                mlx_put_image_to_window(game->mlx, game->window, game->image.img_wall, x * 64, y * 64);
-            }
-            else if (game->map->arr[y][x] == '0')
-            {
-                mlx_put_image_to_window(game->mlx, game->window, game->image.img_floor, x * 64, y * 64);
-            }
-            else if (game->map->arr[y][x] == 'P')
-            {
-                mlx_put_image_to_window(game->mlx, game->window, game->image.img_player, x * 64, y * 64);
-            }
-            else if (game->map->arr[y][x] == 'C')
-            {
-                mlx_put_image_to_window(game->mlx, game->window, game->image.img_collectable, x * 64, y * 64);
-            }
-            else if (game->map->arr[y][x] == 'E')
-            {
-                mlx_put_image_to_window(game->mlx, game->window, game->image.img_exit, x * 64, y * 64);
-            }
-
+            place_image_at_position(game, x, y);
             x++;
         }
         y++;
