@@ -6,25 +6,22 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:08:08 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/08 16:29:20 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:00:02 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// void	nullfunction(t_game *game)
-// {
-// 	game->map = NULL;
-// 	game->player = NULL;
-// 	game->image = NULL;
-// 	game->mlx = NULL;
-// 	game->window = NULL;
-// }
-
+int	free_game(t_game *game)
+{
+	exit_game(game);
+	exit(1);
+}
 void	image_destroy(t_game *game)
 {
-    t_image *image;
-    image = game->image;
+	t_image	*image;
+
+	image = game->image;
 	if (image)
 	{
 		if (image)
@@ -41,29 +38,54 @@ void	image_destroy(t_game *game)
 		image = NULL;
 	}
 }
-
-int main(void)
+void check_error(t_game *game)
 {
-    t_game *game;
-    game = malloc(sizeof(t_game));
-    if (!game)
-        return (1); // Handle malloc failure
-    game->player = malloc(sizeof(t_player));  // Initialize player
-    if (!game->player)
-    {
-        free(game);
-        return (1); // Handle malloc failure
-    }
+	int		s;
+	int		collectable;
+	int		player;
+	int		exit;
+	int 	check ;
+	size_map(game);
+	check = check_wall(game);
+	if (check == 1)
+		exit_game(game);
+	s = is_rectangle(game);
+	if (s == 1)
+		exit_game(game);
+	collectable = count_collectables(game);
+	player = count_player(game);
+	exit = count_exit(game);
+	if (collectable == 0 || exit == 0 || player == 0)
+		exit_game(game);
+}
 
-    load_map(game, "test.txt");
-    size_map(game);
-    int s = is_rectangle(game);
-        if (s == 1)
-            return 1;
-    game->mlx = mlx_init();
-    game->window = mlx_new_window(game->mlx,game->map->width*64,game->map->high * 64, "so_long");
-    game->image = init_images(game);
-    place_images_on_map(game);
-    mlx_key_hook(game->window, key_hook, game);
-    mlx_loop(game->mlx);
+int	main(void)
+{
+	t_game	*game;
+	game = malloc(sizeof(t_game));
+	if (!game)
+		return (1);
+	game->player = malloc(sizeof(t_player));
+	if (!game->player)
+	{
+		free(game);
+		return (1);
+	}
+	load_map(game, "test.txt");
+	check_error(game);
+	size_map(game);
+	exit_pos(game);
+	game->mlx = mlx_init();
+	game->window = mlx_new_window(game->mlx, game->map->width * 64,
+			game->map->high * 64, "so_long");
+	game->image = init_images(game);
+	place_images_on_map(game);
+	if (flood_fill(game) == 0)
+	{
+    		printf("Error: Map is not fully connected or some collectables/exits are unreachable.\n");
+    		exit_game(game);
+	}
+	mlx_hook(game->window, 17, 0, free_game, game);
+	mlx_key_hook(game->window, key_hook, game);
+	mlx_loop(game->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:08:30 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/08 16:17:28 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:34:06 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_images(t_game *game)
 
 void	free_map(t_game *game)
 {
-	int	i;
+	int i;
 
 	if (game->map->arr)
 	{
