@@ -6,15 +6,15 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:01:10 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/09 17:40:26 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:23:35 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int check_wall(t_game *game)
+int	check_wall(t_game *game)
 {
-      int	i;
+	int	i;
 	int	h;
 
 	h = game->map->high;
@@ -30,8 +30,8 @@ int check_wall(t_game *game)
 	i = 1;
 	while (i < h - 1)
 	{
-		if (game->map->arr[i][0] == '0'
-			|| game->map->arr[i][game->map->width - 1] == '0')
+		if (game->map->arr[i][0] == '0' || game->map->arr[i][game->map->width
+			- 1] == '0')
 		{
 			return (1);
 		}
@@ -72,7 +72,7 @@ int	is_rectangle(t_game *game)
 
 size_t	removeln(char *line)
 {
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
@@ -81,8 +81,8 @@ size_t	removeln(char *line)
 }
 void	exit_pos(t_game *game)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -93,9 +93,9 @@ void	exit_pos(t_game *game)
 		{
 			if (game->map->arr[i][j] == 'E')
 			{
-				game->player->exit_x= j;
-				game->player->exit_y= i;
-				return;
+				game->player->exit_x = j;
+				game->player->exit_y = i;
+				return ;
 			}
 			j++;
 		}

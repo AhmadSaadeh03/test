@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 16:33:01 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/09 18:46:00 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:37:14 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void			check_exit(int new_y, int new_x, t_game *game);
 int				is_valid(int new_y, int new_x, t_game *game);
 int				count_exit(t_game *game);
 int				count_player(t_game *game);
-void render_game(int new_y,int new_x,t_game *game);
-void	exit_pos(t_game *game);
-int check_wall(t_game *game);
-int	flood_fill(t_game *game);
+void			render_game(int new_y, int new_x, t_game *game);
+void			exit_pos(t_game *game);
+int				check_wall(t_game *game);
+int				flood_fill(t_game *game);
 #endif

@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 17:44:59 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/09 16:59:40 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:21:48 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_image	*init_images(t_game *game)
 void	place_image_at_position(t_game *game, int x, int y)
 {
 	void	*image;
+
+	exit_pos(game);
 	if (game->map->arr[y][x] == '1')
 		image = game->image->img_wall;
 	else if (game->map->arr[y][x] == '0')
@@ -53,13 +55,13 @@ void	place_image_at_position(t_game *game, int x, int y)
 	}
 	else if (game->map->arr[y][x] == 'C')
 		image = game->image->img_collectable;
-	else if (count_collectables(game)!= 0)
-		 image=game->image->img_floor;
-	else if (count_collectables(game)== 0)
-		{
-			game->map->arr[game->player->exit_y][game->player->exit_x] = 'E';
-			image=game->image->img_exit;
-		}
+	else if (count_collectables(game) != 0 && game->map->arr[y][x] == 'E')
+		image = game->image->img_floor;
+	else if (count_collectables(game) == 0)
+	{
+		game->map->arr[game->player->exit_y][game->player->exit_x] = 'E';
+		image = game->image->img_exit;
+	}
 	else
 		return ;
 	mlx_put_image_to_window(game->mlx, game->window, image, x * 64, y * 64);

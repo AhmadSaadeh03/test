@@ -38,6 +38,7 @@ t_map	*load_map(t_game *game, char *file)
 	int	fd;
 	int	i;
 	int	line_count;
+	int	j;
 
 	i = 0;
 	game->map = malloc(sizeof(t_map));
@@ -60,16 +61,16 @@ t_map	*load_map(t_game *game, char *file)
 		game->map->arr[i] = get_next_line(fd);
 		if (game->map->arr[i] == NULL)
 		{
-    			int j = 0;
-    			while (j < i)
-    		{
-        	free(game->map->arr[j]);
-       		j++;
-    	}
-    free(game->map->arr);
-    close(fd);
-    return (NULL);
-}
+			j = 0;
+			while (j < i)
+			{
+				free(game->map->arr[j]);
+				j++;
+			}
+			free(game->map->arr);
+			close(fd);
+			return (NULL);
+		}
 		i++;
 	}
 	game->map->arr[i] = NULL;
