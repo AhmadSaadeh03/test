@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:20:51 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/08 19:22:21 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 18:00:33 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	count_exit(t_game *game)
 		while (game->map->arr[y][x])
 		{
 			if (game->map->arr[y][x] == 'E')
-			{
 				count++;
-			}
 			x++;
 		}
 		y++;
@@ -41,6 +39,7 @@ int	count_exit(t_game *game)
 	}
 	return (1);
 }
+
 int	count_player(t_game *game)
 {
 	int	count;
@@ -56,9 +55,7 @@ int	count_player(t_game *game)
 		while (game->map->arr[y][x])
 		{
 			if (game->map->arr[y][x] == 'P')
-			{
 				count++;
-			}
 			x++;
 		}
 		y++;

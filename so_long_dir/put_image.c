@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 17:44:59 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 15:21:48 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 19:28:30 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,22 @@ void	place_image_at_position(t_game *game, int x, int y)
 		image = game->image->img_exit;
 	}
 	else
-		return ;
+		return;
 	mlx_put_image_to_window(game->mlx, game->window, image, x * 64, y * 64);
 }
-void	place_images_on_map(t_game *game)
+
+int	element_check(t_game *game, int x, int y)
+{
+	char	current;
+
+	current = game->map->arr[y][x];
+	if (current == '1' || current == '0' || current == 'P' || current == 'C'
+		|| current == 'E')
+		return (0);
+	return (1);
+}
+
+int	place_images_on_map(t_game *game)
 {
 	int	x;
 	int	y;
@@ -79,6 +91,30 @@ void	place_images_on_map(t_game *game)
 		while (game->map->arr[y][x])
 		{
 			place_image_at_position(game, x, y);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+void	elements(t_game *game)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (game->map->arr[y] != NULL)
+	{
+		x = 0;
+		while (game->map->arr[y][x] && game->map->arr[y][x] != '\n')
+		{
+			if (element_check(game, x, y) == 1)
+			{
+				perror("Error\n Invalid character");
+				exit_game(game, 0);
+			}
 			x++;
 		}
 		y++;

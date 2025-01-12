@@ -6,13 +6,13 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:08:30 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/08 18:34:06 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 17:58:52 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	exit_game(t_game *game)
+void	exit_game(t_game *game, int bool)
 {
 	if (game)
 	{
@@ -34,7 +34,7 @@ void	exit_game(t_game *game)
 			free_map(game);
 		free(game);
 	}
-	exit(1);
+	exit(bool);
 }
 
 void	free_images(t_game *game)
@@ -56,7 +56,7 @@ void	free_images(t_game *game)
 
 void	free_map(t_game *game)
 {
-	int i;
+	int	i;
 
 	if (game->map->arr)
 	{
@@ -69,4 +69,10 @@ void	free_map(t_game *game)
 		free(game->map->arr);
 		free(game->map);
 	}
+}
+
+int	free_game(t_game *game)
+{
+	exit_game(game, 1);
+	exit(1);
 }

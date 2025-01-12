@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 20:03:02 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 15:18:48 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 17:57:47 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	check_exit(int new_y, int new_x, t_game *game)
 	if (game->map->arr[new_y][new_x] == 'E' && count_collectables(game) == 0)
 	{
 		printf("You have reached the exit! Exiting the game...\n");
-		exit_game(game);
+		exit_game(game, 0);
 	}
 }
+
 void	render_game(int new_y, int new_x, t_game *game)
 {
 	static int	move = 1;
@@ -31,6 +32,7 @@ void	render_game(int new_y, int new_x, t_game *game)
 	write(1, "\n", 1);
 	move++;
 }
+
 void	init_player_position(t_game *game)
 {
 	int	i;
@@ -54,6 +56,7 @@ void	init_player_position(t_game *game)
 		i++;
 	}
 }
+
 void	update_move(int new_y, int new_x, t_game *game)
 {
 	game->map->arr[new_y][new_x] = 'P';
@@ -61,6 +64,7 @@ void	update_move(int new_y, int new_x, t_game *game)
 	game->player->player_x = new_x;
 	game->player->player_y = new_y;
 }
+
 int	key_hook(int keycode, t_game *game)
 {
 	int	new_x;
@@ -69,7 +73,7 @@ int	key_hook(int keycode, t_game *game)
 	new_x = game->player->player_x;
 	new_y = game->player->player_y;
 	if (keycode == 65307)
-		exit_game(game);
+		exit_game(game, 1);
 	if ((keycode >= 65361 && keycode <= 65364) || (keycode == 97
 			|| keycode == 119 || keycode == 100 || keycode == 115))
 	{

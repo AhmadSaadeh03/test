@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:01:10 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 14:23:35 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 18:43:42 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ int	is_rectangle(t_game *game)
 	while (game->map->arr[i])
 	{
 		if (removeln(game->map->arr[i]) != len)
-		{
-			perror("Error: The map is not rectangle.");
 			return (1);
-		}
 		i++;
 	}
 	return (0);
@@ -79,10 +76,11 @@ size_t	removeln(char *line)
 		len--;
 	return (len);
 }
+
 void	exit_pos(t_game *game)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

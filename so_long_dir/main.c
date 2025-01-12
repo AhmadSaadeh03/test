@@ -6,17 +6,21 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:08:08 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 15:28:23 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 18:54:45 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	free_game(t_game *game)
+void	nullfunction(t_game *game)
 {
-	exit_game(game);
-	exit(1);
+	game->map = NULL;
+	game->player = NULL;
+	game->image = NULL;
+	game->mlx = NULL;
+	game->window = NULL;
 }
+
 void	image_destroy(t_game *game)
 {
 	t_image	*image;
@@ -38,36 +42,48 @@ void	image_destroy(t_game *game)
 		image = NULL;
 	}
 }
+
 void	check_error(t_game *game)
 {
 	size_map(game);
 	if (check_wall(game) == 1)
-		exit_game(game);
+	{
+		perror("Error\n not surrounded by walls");
+		exit_game(game, 1);
+	}
 	if (is_rectangle(game) == 1)
-		exit_game(game);
+	{
+		perror("Error\n The map is not rectangle");
+		exit_game(game, 1);
+	}
 	if (count_collectables(game) == 0 || count_exit(game) == 0
 		|| count_player(game) == 0)
-		exit_game(game);
+		exit_game(game, 1);
 	if (flood_fill(game) == 0)
 	{
-		perror("Error: Map is not fully connected or some collectables/exits are unreachable.\n");
-		exit_game(game);
+		perror("Error:some collectables/exits are unreachable.\n");
+		exit_game(game, 1);
 	}
+	elements(game);
 }
 
-int	main(void)
+t_game	*init_game(char **argv)
 {
-	t_game *game;
+	t_game	*game;
+
 	game = malloc(sizeof(t_game));
 	if (!game)
-		return (1);
+		return (NULL);
+	nullfunction(game);
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
 	{
 		free(game);
-		return (1);
+		return (NULL);
 	}
-	load_map(game, "test.txt");
+	game->map = load_map(game, argv);
+	if (!game->map)
+		exit_game(game, 1);
 	check_error(game);
 	size_map(game);
 	game->mlx = mlx_init();
@@ -75,8 +91,31 @@ int	main(void)
 			game->map->high * 64, "so_long");
 	game->image = init_images(game);
 	place_images_on_map(game);
+	return (game);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_game	*game;
+	int		i;
+
+	if (argc != 2)
+		return (0);
+	i = 0;
+	while (argv[1][i])
+		i++;
+	i -= 1;
+	if (argv[1][i] != 'r' || argv[1][i - 1] != 'e' || argv[1][i - 2] != 'b'
+		|| argv[1][i - 3] != '.')
+		return (1);
+	game = init_game(argv);
+	if (!game)
+	{
+		perror("Error initializing game\n");
+		return (1);
+	}
 	mlx_hook(game->window, 17, 0, free_game, game);
 	mlx_key_hook(game->window, key_hook, game);
 	mlx_loop(game->mlx);
-	exit_game(game);
+	exit_game(game, 0);
 }

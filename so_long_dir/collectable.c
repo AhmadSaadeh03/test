@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:19:11 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 15:23:48 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/11 17:59:15 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	count_collectables(t_game *game)
 {
-	int count = 0;
-	int y = 0;
-	int x = 0;
+	int	count;
+	int	y;
+	int	x;
 
+	count = 0;
+	y = 0;
+	x = 0;
 	while (game->map->arr[y])
 	{
 		x = 0;
