@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 16:33:01 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/12 19:28:43 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 19:31:30 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ typedef struct s_game
 }				t_game;
 void			size_map(t_game *game);
 t_map			*load_map(t_game *game, char **argv);
-// int				count_lines(char *file);
-
 int				count_lines(t_game *game, char **argv);
 void			open_window(t_game *game);
 t_image			*init_images(t_game *game);
@@ -62,8 +60,7 @@ void			update_move(int new_y, int new_x, t_game *game);
 void			image_destroy(t_game *game);
 int				is_rectangle(t_game *game);
 size_t			removeln(char *line);
-void				place_image_at_position(t_game *game, int x, int y);
-// void			exit_game(t_game *game);
+void			place_image_at_position(t_game *game, int x, int y);
 void			exit_game(t_game *game, int bool);
 void			free_images(t_game *game);
 void			free_map(t_game *game);

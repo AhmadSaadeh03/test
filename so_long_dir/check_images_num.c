@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:20:51 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/11 18:00:33 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 19:48:00 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	count_exit(t_game *game)
 	}
 	if (count == 0 || count > 1)
 	{
-		perror("there is no exit or you have more than one");
+		perror("Error\nthere is no exit or you have more than one");
 		return (0);
 	}
 	return (1);
@@ -62,7 +62,7 @@ int	count_player(t_game *game)
 	}
 	if (count == 0 || count > 1)
 	{
-		perror("there is no player or you have more than one");
+		perror("Error\nthere is no player or you have more than one");
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:41:15 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/12 19:24:39 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 19:42:07 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	**allocate_visited(int height, int width)
 	visited = malloc(sizeof(int *) * height);
 	if (!visited)
 		return (NULL);
-	i = 0;
-	while (i++ < height)
+	i = -1;
+	while (++i < height)
 	{
 		visited[i] = malloc(sizeof(int) * width);
 		if (!visited[i])
@@ -102,9 +102,11 @@ int	**allocate_visited(int height, int width)
 			free(visited);
 			return (NULL);
 		}
-		j = 0;
-		while (j < width)
-			visited[i][j++] = 0;
+		j = -1;
+		while (++j < width)
+		{
+			visited[i][j] = 0;
+		}
 	}
 	return (visited);
 }

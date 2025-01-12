@@ -6,13 +6,13 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:08:08 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/12 18:54:45 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 20:05:27 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	nullfunction(t_game *game)
+static void	nullfunction(t_game *game)
 {
 	game->map = NULL;
 	game->player = NULL;
@@ -43,31 +43,35 @@ void	image_destroy(t_game *game)
 	}
 }
 
-void	check_error(t_game *game)
+static void	check_error(t_game *game)
 {
 	size_map(game);
 	if (check_wall(game) == 1)
 	{
-		perror("Error\n not surrounded by walls");
+		perror("Error\nnot surrounded by walls");
 		exit_game(game, 1);
 	}
 	if (is_rectangle(game) == 1)
 	{
-		perror("Error\n The map is not rectangle");
+		perror("Error\nThe map is not rectangle");
 		exit_game(game, 1);
 	}
-	if (count_collectables(game) == 0 || count_exit(game) == 0
-		|| count_player(game) == 0)
+	if (count_collectables(game) == 0)
+	{
+		perror("Error\nthere is no collectable");
 		exit_game(game, 1);
+	}
+	if (count_exit(game) == 0 ||count_player(game) == 0)
+		exit_game(game,1);
 	if (flood_fill(game) == 0)
 	{
-		perror("Error:some collectables/exits are unreachable.\n");
+		perror("Error\nsome collectables/exits are unreachable.\n");
 		exit_game(game, 1);
 	}
 	elements(game);
 }
 
-t_game	*init_game(char **argv)
+static t_game	*init_game(char **argv)
 {
 	t_game	*game;
 
@@ -87,6 +91,8 @@ t_game	*init_game(char **argv)
 	check_error(game);
 	size_map(game);
 	game->mlx = mlx_init();
+	if (!game->mlx)
+		exit_game(game,1);
 	game->window = mlx_new_window(game->mlx, game->map->width * 64,
 			game->map->high * 64, "so_long");
 	game->image = init_images(game);

@@ -6,7 +6,7 @@
 /*   By: asaadeh <asaadeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 17:44:59 by asaadeh           #+#    #+#             */
-/*   Updated: 2025/01/12 19:28:30 by asaadeh          ###   ########.fr       */
+/*   Updated: 2025/01/12 19:32:30 by asaadeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	place_image_at_position(t_game *game, int x, int y)
 		image = game->image->img_exit;
 	}
 	else
-		return;
+		return ;
 	mlx_put_image_to_window(game->mlx, game->window, image, x * 64, y * 64);
 }
 
